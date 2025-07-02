@@ -1,3 +1,4 @@
+use num_bigint::BigUint;
 use std::io;
 
 fn main() {
@@ -73,17 +74,17 @@ fn music_lyrics() {
 }
 
 fn fibonnaci_generator() {
-    fn iterative_fibb(n: u128) -> u128 {
-        let mut a = 0;
-        let mut b = 1;
+    fn iterative_fibb(n: i32) -> BigUint {
+        let mut a = BigUint::from(0 as u32);
+        let mut b = BigUint::from(1 as u32);
         let mut c;
         if n == 0 {
             return a;
         }
         for _m in 2..=n {
-            c = a + b;
-            a = b;
-            b = c;
+            c = a.clone() + b.clone();
+            a = b.clone();
+            b = c.clone();
         }
         return b;
     }
@@ -111,7 +112,7 @@ fn fibonnaci_generator() {
 
         let temp_input = user_input.clone();
 
-        let user_input: u128 = match user_input.trim().parse() {
+        let user_input: i32 = match user_input.trim().parse() {
             Ok(num) => num,
             Err(_) => 0,
         };
@@ -127,9 +128,12 @@ fn fibonnaci_generator() {
             }
         }
 
+        let answer = iterative_fibb(user_input);
+
+        println!("The Fibonnaci sequence up to n={user_input} is {}", answer);
         println!(
-            "The Fibonnaci sequence up to n={user_input} is {}",
-            iterative_fibb(user_input)
+            "The length of the number printed is {}",
+            answer.to_string().len()
         );
     }
 }
